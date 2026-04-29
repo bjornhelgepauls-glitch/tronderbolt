@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
 
+<style>
+body {
+  margin:0;
+  font-family:system-ui;
+  background:#0f172a;
+  color:white;
+}
+
+.header {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:15px;
+}
+
+.header img { height:40px; }
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  padding:15px;
+}
+
+.btn {
+  background:#1e293b;
+  padding:30px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.btn:active {
+  background:#3b82f6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <img src="/static/logo.png">
+  <h2>TRØNDERBOLT</h2>
+</div>
+
+<div class="grid" id="buttons"></div>
+
+<script>
+let html="";
+for(let i=0;i<7;i++){
+  html += `<div class="btn" onclick="press(${i})">BTN ${i+1}</div>`;
+}
+document.getElementById("buttons").innerHTML = html;
+
+function press(i){
+  fetch('/api/trigger',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({id:i})
+  });
+}
+</script>
+
+</body>
+</html>
